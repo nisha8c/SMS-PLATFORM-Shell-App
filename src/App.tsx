@@ -12,18 +12,34 @@ import {
 import { AppLayout } from "shared-lib";
 import { Loader2 } from "lucide-react";
 import {eventBus, EventTypes} from "./lib/eventBus.ts";
+import {MODULE_DEPENDENCIES} from "./config/moduleDependencies.ts";
+import {moduleLoader} from "./lib/moduleLoader.ts";
+
+const createLazyModule = (
+    name: string,
+    importer: () => Promise<any>
+) => {
+    const deps = MODULE_DEPENDENCIES[name as keyof typeof MODULE_DEPENDENCIES] || [];
+
+    return lazy(() =>
+        moduleLoader
+            .loadWithDependencies(name, importer, deps)
+            .then(() => importer())
+    );
+};
+
 
 // Import remote micro frontends
-const DashboardPage = lazy(() => import("dashboard/DashboardPage"));
-const ContactsPage = lazy(() => import("contacts/ContactsPage"));
-const CompaniesPage = lazy(() => import("companies/CompaniesPage"));
-const MessagesPage = lazy(() => import("messages/MessagesPage"));
-const WorkflowsPage = lazy(() => import("workflows/WorkflowsPage"));
-const MonitoringPage = lazy(() => import("monitoring/MonitoringPage"));
-const ReportsPage = lazy(() => import("reports/ReportsPage"));
-const ConfigurationPage = lazy(() => import("configuration/ConfigurationPage"));
-const AdminPage = lazy(() => import("admin/AdminPage"));
-const ProfilePage = lazy(() => import("profile/ProfilePage"));
+const DashboardPage = createLazyModule("dashboard", () => import("dashboard/DashboardPage"));
+const ContactsPage = createLazyModule("contacts", () => import("contacts/ContactsPage"));
+const CompaniesPage = createLazyModule("companies", () => import("companies/CompaniesPage"));
+const MessagesPage = createLazyModule("messages", () => import("messages/MessagesPage"));
+const WorkflowsPage = createLazyModule("workflows", () => import("workflows/WorkflowsPage"));
+const MonitoringPage = createLazyModule("monitoring", () => import("monitoring/MonitoringPage"));
+const ReportsPage = createLazyModule("reports", () => import("reports/ReportsPage"));
+const ConfigurationPage = createLazyModule("configuration", () => import("configuration/ConfigurationPage"));
+const AdminPage = createLazyModule("admin", () => import("admin/AdminPage"));
+const ProfilePage = createLazyModule("profile", () => import("profile/ProfilePage"));
 
 const ModuleLoader = () => (
     <div className="flex items-center justify-center min-h-screen">
