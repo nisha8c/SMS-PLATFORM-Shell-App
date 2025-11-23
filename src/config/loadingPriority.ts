@@ -1,10 +1,13 @@
 
-export enum LoadPriority {
-    CRITICAL = 0,  // Must load first (auth, shell)
-    HIGH = 1,      // User-facing features (dashboard)
-    MEDIUM = 2,    // Secondary features (contacts, companies)
-    LOW = 3,       // Admin/config features
-}
+export const LoadPriority = {
+    CRITICAL: 0,
+    HIGH: 1,
+    MEDIUM: 2,
+    LOW: 3,
+} as const;
+
+export type LoadPriority = typeof LoadPriority[keyof typeof LoadPriority];
+
 
 export const MODULE_PRIORITIES = {
     dashboard: LoadPriority.HIGH,
@@ -17,7 +20,8 @@ export const MODULE_PRIORITIES = {
     configuration: LoadPriority.LOW,
     admin: LoadPriority.LOW,
     profile: LoadPriority.MEDIUM,
-};
+} as const;
+
 
 export const preloadCriticalModules = async () => {
     const critical = Object.entries(MODULE_PRIORITIES)
