@@ -14,6 +14,7 @@ import { Loader2 } from "lucide-react";
 import {eventBus, EventTypes} from "./lib/eventBus.ts";
 import {MODULE_DEPENDENCIES} from "./config/moduleDependencies.ts";
 import {moduleLoader} from "./lib/moduleLoader.ts";
+import {MFEErrorBoundary} from "./components/MFEErrorBoundary.tsx";
 
 const createLazyModule = (
     name: string,
@@ -83,17 +84,78 @@ function App() {
                             <Suspense fallback={<ModuleLoader />}>
                                 <Routes>
                                     <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                                    <Route path="/dashboard" element={<DashboardPage />} />
-                                    <Route path="/contacts" element={<ContactsPage />} />
-                                    <Route path="/companies" element={<CompaniesPage />} />
-                                    <Route path="/messages" element={<MessagesPage />} />
-                                    <Route path="/workflows" element={<WorkflowsPage />} />
-                                    <Route path="/monitoring" element={<MonitoringPage />} />
-                                    <Route path="/reports" element={<ReportsPage />} />
-                                    <Route path="/configuration" element={<ConfigurationPage />} />
-                                    <Route path="/admin" element={<AdminPage />} />
-                                    <Route path="/profile" element={<ProfilePage />} />
+
+                                    <Route path="/dashboard"
+                                           element={
+                                               <MFEErrorBoundary moduleName="dashboard">
+                                                   <DashboardPage />
+                                               </MFEErrorBoundary>
+                                           } />
+
+                                    <Route path="/contacts"
+                                           element={
+                                               <MFEErrorBoundary moduleName="contacts">
+                                                   <ContactsPage />
+                                               </MFEErrorBoundary>
+                                           } />
+
+                                    <Route path="/companies"
+                                           element={
+                                               <MFEErrorBoundary moduleName="companies">
+                                                   <CompaniesPage />
+                                               </MFEErrorBoundary>
+                                           } />
+
+                                    <Route path="/messages"
+                                           element={
+                                               <MFEErrorBoundary moduleName="messages">
+                                                   <MessagesPage />
+                                               </MFEErrorBoundary>
+                                           } />
+
+                                    <Route path="/workflows"
+                                           element={
+                                               <MFEErrorBoundary moduleName="workflows">
+                                                   <WorkflowsPage />
+                                               </MFEErrorBoundary>
+                                           } />
+
+                                    <Route path="/monitoring"
+                                           element={
+                                               <MFEErrorBoundary moduleName="monitoring">
+                                                   <MonitoringPage />
+                                               </MFEErrorBoundary>
+                                           } />
+
+                                    <Route path="/reports"
+                                           element={
+                                               <MFEErrorBoundary moduleName="reports">
+                                                   <ReportsPage />
+                                               </MFEErrorBoundary>
+                                           } />
+
+                                    <Route path="/configuration"
+                                           element={
+                                               <MFEErrorBoundary moduleName="configuration">
+                                                   <ConfigurationPage />
+                                               </MFEErrorBoundary>
+                                           } />
+
+                                    <Route path="/admin"
+                                           element={
+                                               <MFEErrorBoundary moduleName="admin">
+                                                   <AdminPage />
+                                               </MFEErrorBoundary>
+                                           } />
+
+                                    <Route path="/profile"
+                                           element={
+                                               <MFEErrorBoundary moduleName="profile">
+                                                   <ProfilePage />
+                                               </MFEErrorBoundary>
+                                           } />
                                 </Routes>
+
                             </Suspense>
                         </AppLayout>
                     </BrowserRouter>
