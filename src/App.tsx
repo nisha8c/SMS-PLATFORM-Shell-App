@@ -7,9 +7,9 @@ import {
     AuthProvider,
     TooltipProvider,
     Toaster,
-    Sonner
+    SonnerToaster
 } from "shared-lib";
-import { AppLayout } from "./components/AppLayout";
+import { AppLayout } from "shared-lib";
 import { Loader2 } from "lucide-react";
 
 // Import remote micro frontends
@@ -39,7 +39,7 @@ function App() {
             <AuthProvider>
                 <TooltipProvider>
                     <Toaster />
-                    <Sonner />
+                    <SonnerToaster />
                     <BrowserRouter>
                         <AppLayout>
                             <Suspense fallback={<ModuleLoader />}>
