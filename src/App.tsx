@@ -37,6 +37,14 @@ const ModuleLoader = () => (
 function App() {
     useEffect(() => {
         // Initialize event bus listeners
+        // Expose event bus globally for all MFEs
+        window.__SHELL_EVENT_BUS__ = {
+            setModuleReady: (name: string) => eventBus.setModuleReady(name),
+            on: (event: string, callback: (data?: any) => void) => eventBus.on(event, callback),
+            emit: (event: string, data?: any) => eventBus.emit(event, data),
+            isModuleReady: (name: string) => eventBus.isModuleReady(name),
+        };
+
         const unsubscribe = eventBus.on(EventTypes.MODULE_ERROR, (error) => {
             console.error('Module error:', error);
             // Show error toast or notification
@@ -44,6 +52,8 @@ function App() {
 
         return () => {
             unsubscribe();
+            delete window.__SHELL_EVENT_BUS__;
+
         };
     }, []);
     return (
