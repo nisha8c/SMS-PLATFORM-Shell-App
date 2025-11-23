@@ -1,6 +1,6 @@
 import './App.css'
 
-import { lazy, Suspense } from "react";
+import {lazy, Suspense, useEffect} from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import {
     ThemeProvider,
@@ -11,6 +11,7 @@ import {
 } from "shared-lib";
 import { AppLayout } from "shared-lib";
 import { Loader2 } from "lucide-react";
+import {eventBus, EventTypes} from "./lib/eventBus.ts";
 
 // Import remote micro frontends
 const DashboardPage = lazy(() => import("dashboard/DashboardPage"));
@@ -34,6 +35,17 @@ const ModuleLoader = () => (
 );
 
 function App() {
+    useEffect(() => {
+        // Initialize event bus listeners
+        const unsubscribe = eventBus.on(EventTypes.MODULE_ERROR, (error) => {
+            console.error('Module error:', error);
+            // Show error toast or notification
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, []);
     return (
         <ThemeProvider>
             <AuthProvider>
