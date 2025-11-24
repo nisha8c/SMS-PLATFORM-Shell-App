@@ -11,10 +11,10 @@ import {
 } from "shared-lib";
 import { AppLayout } from "shared-lib";
 import { Loader2 } from "lucide-react";
-import {eventBus, EventTypes} from "./lib/eventBus.ts";
-import {MODULE_DEPENDENCIES} from "./config/moduleDependencies.ts";
-import {moduleLoader} from "./lib/moduleLoader.ts";
-import {MFEErrorBoundary} from "./components/MFEErrorBoundary.tsx";
+import {eventBus, EventTypes} from "./lib/eventBus";
+import {MODULE_DEPENDENCIES} from "./config/moduleDependencies";
+import {moduleLoader} from "./lib/moduleLoader";
+import {MFEErrorBoundary} from "./components/MFEErrorBoundary";
 
 const createLazyModule = (
     name: string,

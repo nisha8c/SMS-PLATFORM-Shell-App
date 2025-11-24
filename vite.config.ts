@@ -14,6 +14,13 @@ type SharedWithSingleton = Record<string, SharedConfigWithSingleton>;
 
 
 export default defineConfig({
+    resolve: {
+        preserveSymlinks: true,
+        alias: {
+            "@": path.resolve(__dirname, "./src"),
+        },
+
+    },
     server: {
         port: 3000,
         host: true,
@@ -53,11 +60,6 @@ export default defineConfig({
 
         }),
     ],
-    resolve: {
-        alias: {
-            "@": path.resolve(__dirname, "./src"),
-        },
-    },
     build: {
         target: "esnext",
         minify: false,
