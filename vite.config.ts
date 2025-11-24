@@ -24,6 +24,15 @@ export default defineConfig({
     server: {
         port: 3000,
         host: true,
+        fs: {
+            allow: [
+                // 👇 allow the shell root (default)
+                path.resolve(__dirname),
+
+                // 👇 allow the shared-lib symlink target
+                path.resolve(__dirname, "../shared-lib"),
+            ]
+        }
     },
     plugins: [
         react(),
